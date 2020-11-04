@@ -31,7 +31,7 @@
 							<label v-text="task.title" @dblclick="flag=task.id"></label>
 							<button class="destroy" @click="deleteOne(task.id)"></button>
 						</div>
-						<input class="edit" value="" @blur="edit(task.id)" @keyup.enter="edit(task.id)" v-model="task.title">
+						<input class="edit" @blur="edit()" @keyup.enter="edit()" v-model="task.title" v-auto-focus="flag==task.id">
 					</li>
 				</ul>
 			</section>

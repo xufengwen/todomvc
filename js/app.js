@@ -68,6 +68,13 @@
 				this.text="";
 				storage.setStorage(this.tasks);
 			}
+		},
+		directives:{
+			'autoFocus':function(el,binding){
+				if(binding.value){
+					el.focus();
+				}
+			}
 		}
 	});
 	

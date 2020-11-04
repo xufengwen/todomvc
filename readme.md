@@ -1,31 +1,54 @@
 # TodoMVC App Template
 
-###功能描述
-1、添加任务
+## 功能描述
+1、添加任务 
+
 2、展示任务
+
 3、切换任务完成状态
+
 4、批量切换任务完成状态
+
 5、批量展示对应任务状态
+
    +路由选择
+   
 6、清除已完成任务
+
 7、本地存储数据
+
 8、编辑任务
+
 9、删除任务
+
 10、显示/隐藏清除按钮
+
 11、未完成任务数量
-###功能完成列表
+
+## 功能完成列表
 1、添加任务：.new-todo中的enter事件；
+
 2、展示任务：根据本地存储实时渲染
+
 3、切换任务完成状态:".todo-list">li点击事件
+
 4、批量切换任务完成状态:".toggle-all"点击事件
+
 5、批量展示对应任务状态：根据本地存储实时渲染；
+
 6、清除已完成任务：".clear-completed"点击事件
+
 7、本地存储数据：window.localstorge.setItem();
+
 8、编辑任务:".view>label"双击给".todo-list">li添加类名"editing"
+
 9、删除任务:".destroy"点击事件
+
 10、显示/隐藏清除按钮：根据本地存储实时渲染；
+
 11、未完成任务数量：根据本地存储实时渲染；
-###1、本地存储数据
+
+## 1、本地存储数据
 ```js
 window.storage={
 	getLocalstorge(){
@@ -55,7 +78,7 @@ window.app=new Vue({
 	<input class="edit" value="" @blur="edit(task.id)" @keyup.enter="edit(task.id)" v-model="task.title">
 </li>
 ```
-###2、展示任务：根据本地存储实时渲染
+## 2、展示任务：根据本地存储实时渲染
 ```html
 <li v-for="task in tasks" :key="task.id" :class="{completed:task.completed,editing:flag==task.id}">
 	<div class="view">
@@ -66,7 +89,7 @@ window.app=new Vue({
 	<input class="edit" value="" @blur="edit(task.id)" @keyup.enter="edit(task.id)" v-model="task.title">
 </li>
 ```
-###3、添加任务
+## 3、添加任务
 ```js
 methods:{
 	addOne(){
@@ -93,7 +116,7 @@ methods:{
 	<input class="edit" value="" @blur="edit(task.id)" @keyup.enter="edit(task.id)" v-model="task.title">
 </li>
 ```
-###4、切换任务完成状态
+## 4、切换任务完成状态
 ```js
 toggleOne(id){
 	var item=this.tasks.find(item=>item.id==id);
@@ -101,7 +124,7 @@ toggleOne(id){
 	storage.setStorage(this.tasks);
 },
 ```
-###5、批量切换任务完成状态:".toggle-all"点击事件
+## 5、批量切换任务完成状态:".toggle-all"点击事件
 ```js
 toggleAll(){
 	this.tasks.map(item=>item.completed=this.status);
@@ -113,7 +136,7 @@ toggleAll(){
 <input id="toggle-all" class="toggle-all" type="checkbox">
 <label for="toggle-all" @click="toggleAll">Mark all as complete</label>
 ```
-###6、编辑任务
+## 6、编辑任务
 ```js
 edit(id){
 				this.flag=-1;
@@ -123,7 +146,7 @@ edit(id){
 ```html
 <input class="edit" value="" @blur="edit(task.id)" @keyup.enter="edit(task.id)" v-model="task.title">
 ```
-###7、删除任务:".destroy"点击事件
+## 7、删除任务:".destroy"点击事件
 ```js
 deleteOne(id){
 	this.tasks=this.tasks.filter(item=>item.id!=id);
@@ -133,7 +156,7 @@ deleteOne(id){
 ```html
 <button class="destroy" @click="deleteOne(task.id)"></button>
 ```
-###8、显示/隐藏清除按钮：根据本地存储实时渲染
+## 8、显示/隐藏清除按钮：根据本地存储实时渲染
 ```js
 computed:{
 			nowTodo(){
@@ -145,7 +168,7 @@ computed:{
 ```html
 <span class="todo-count"><strong>{{nowTodo}}</strong> item left</span>
 ```
-###9、清除已完成任务：".clear-completed"点击事件
+## 9、清除已完成任务：".clear-completed"点击事件
 ```js
 clearCompleted(){
 				this.tasks=this.tasks.filter(item=>!item.completed);
@@ -155,11 +178,11 @@ clearCompleted(){
 ```html
 <button class="clear-completed" @click="clearCompleted" v-if="nowTodo!=tasks.length">Clear completed</button>
 ```
-###10、显示/隐藏清除按钮：根据本地存储实时渲染
+## 10、显示/隐藏清除按钮：根据本地存储实时渲染
 ```html
 <button class="clear-completed" @click="clearCompleted" v-if="nowTodo!=tasks.length">Clear completed</button>
 ```
-###11、批量展示对应任务状态
+## 11、批量展示对应任务状态
 ```js
 show(i){
 	if(this.hash.completed===''){
@@ -218,4 +241,17 @@ if(window.location.hash=='#/active'){
 		<a :class="{selected:hash.status=='completed'}" href="#/completed">Completed</a>
 	</li>
 </ul>
+```
+## 12、双击任务编辑时自动聚焦
+```js
+directives:{
+			'autoFocus':function(el,binding){
+				if(binding.value){
+					el.focus();
+				}
+			}
+		}
+```
+```html
+<input class="edit" @blur="edit()" @keyup.enter="edit()" v-model="task.title" v-auto-focus="flag==task.id">
 ```
